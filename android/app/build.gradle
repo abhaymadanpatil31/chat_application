@@ -6,6 +6,7 @@ plugins {
     id "kotlin-android"
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id "dev.flutter.flutter-gradle-plugin"
+    id 'com.google.firebase.crashlytics'
 }
 
 def localProperties = new Properties()
@@ -50,6 +51,10 @@ android {
     buildTypes {
         release {
             signingConfig = signingConfigs.debug
+            firebaseCrashlytics {
+                nativeSymbolUploadEnabled true // Optional: Upload native debug symbols for better crash reporting
+                unstrippedNativeLibsDir 'libs' // Optional: Include if you're working with native libraries
+            }
         }
     }
 
@@ -72,4 +77,5 @@ flutter {
 
 dependencies {
     implementation 'androidx.multidex:multidex:2.0.1' // Add this line for multiDex support
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
 }
