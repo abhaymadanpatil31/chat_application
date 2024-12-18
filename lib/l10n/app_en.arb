@@ -1,0 +1,9 @@
+{
+    "@@locale": "en",
+    "welcomeTitle": "Welcome to ChatApp",
+    "signInToContinue": "Sign in to continue",
+    "signInWithGoogle": "Sign in with Google",
+    "signInFailed": "Failed to sign in. Please try again.",
+    "loading": "Loading...",
+    "pleaseWait": "Please wait..."
+}

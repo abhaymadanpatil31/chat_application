@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:chatapp/screens/login_screen.dart';
 import 'package:chatapp/screens/user_list_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // Import generated localization file
 
 class AuthWrapper extends StatelessWidget {
   const AuthWrapper({super.key});
@@ -19,10 +20,23 @@ class AuthWrapper extends StatelessWidget {
             return UserListScreen(currentUser: user);
           }
         }
-        return const Scaffold(
+        return Scaffold(
+          appBar: AppBar(
+            title:
+                Text(AppLocalizations.of(context)!.loading), // Localized title
+          ),
           body: Center(
-            child: CircularProgressIndicator(
-              color: Colors.green,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const CircularProgressIndicator(color: Colors.green),
+                const SizedBox(height: 20),
+                Text(
+                  AppLocalizations.of(context)!
+                      .pleaseWait, // Localized loading text
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
             ),
           ),
         );

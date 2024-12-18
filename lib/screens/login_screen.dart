@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // Import the localization package
 
 class LoginScreen extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -65,6 +66,8 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalizations.of(context)!;
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -88,18 +91,18 @@ class LoginScreen extends StatelessWidget {
                       color: Colors.white,
                     ),
                     const SizedBox(height: 30),
-                    const Text(
-                      'Welcome to ChatApp',
-                      style: TextStyle(
+                    Text(
+                      localization.welcomeTitle, // Localized string
+                      style: const TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
                     ),
                     const SizedBox(height: 10),
-                    const Text(
-                      'Sign in to continue',
-                      style: TextStyle(
+                    Text(
+                      localization.signInToContinue, // Localized string
+                      style: const TextStyle(
                         fontSize: 16,
                         color: Colors.white70,
                       ),
@@ -122,9 +125,9 @@ class LoginScreen extends StatelessWidget {
                             height: 24.0,
                           ),
                           const SizedBox(width: 12),
-                          const Text(
-                            'Sign in with Google',
-                            style: TextStyle(fontSize: 16),
+                          Text(
+                            localization.signInWithGoogle, // Localized string
+                            style: const TextStyle(fontSize: 16),
                           ),
                         ],
                       ),
@@ -134,9 +137,9 @@ class LoginScreen extends StatelessWidget {
                         if (user == null) {
                           log("Google Sign-In failed or was canceled.");
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content:
-                                  Text('Failed to sign in. Please try again.'),
+                            SnackBar(
+                              content: Text(localization
+                                  .signInFailed), // Localized string
                             ),
                           );
                         } else {
