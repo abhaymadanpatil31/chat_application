@@ -5,5 +5,13 @@
     "signInWithGoogle": "Sign in with Google",
     "signInFailed": "Failed to sign in. Please try again.",
     "loading": "Loading...",
-    "pleaseWait": "Please wait..."
+    "pleaseWait": "Please wait...",
+    "chatWithUsers": "Chat With Users",
+    "logoutFailed": "Failed to log out. Please try again.",
+    "unknownUser": "Unknown User",
+    "typeAMessage": "Type a message",
+    "languageChanged": "Language changed successfully.",
+    "settings": "Settings",
+    "selectLanguage": "Select Language",
+    "logout": "Logout"
 }

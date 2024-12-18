@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // Import localization
 
 class ChatScreen extends StatefulWidget {
   final User currentUser;
@@ -80,6 +80,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     String chatRoomId =
         _getChatRoomId(widget.currentUser.email!, widget.otherUserEmail);
+    final localization = AppLocalizations.of(context)!; // Access localization
 
     return Scaffold(
       appBar: AppBar(
@@ -223,7 +224,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       controller: _messageController,
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: 'Type a message',
+                        hintText: localization.typeAMessage, // Localized hint
                         hintStyle: GoogleFonts.mukta(color: Colors.grey),
                       ),
                     ),

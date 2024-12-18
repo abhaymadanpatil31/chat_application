@@ -1,52 +1,53 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:chatapp/screens/chat_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:google_sign_in/google_sign_in.dart';
-
 import 'package:chatapp/screens/login_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'Settings.dart'; // Import the settings page
 
 class UserListScreen extends StatelessWidget {
   final User currentUser;
+  final Function(Locale) setLocale; // Add setLocale parameter
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-  UserListScreen({required this.currentUser});
+  UserListScreen(
+      {required this.currentUser,
+      required this.setLocale}); // Accept setLocale in constructor
 
-  Future<void> _handleLogout(BuildContext context) async {
-    try {
-      await _auth.signOut();
-      await _googleSignIn.signOut();
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (_) => LoginScreen()),
-        (Route<dynamic> route) => false,
-      );
-    } catch (error) {
-      log("Error during logout: $error");
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to log out. Please try again.')),
-      );
-    }
+  // Function to navigate to settings page
+  void _navigateToSettings(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SettingsPage(
+          setLocale: setLocale,
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Chat With Users',
+          localization.chatWithUsers, // Localized string
           style: GoogleFonts.mukta(
             fontSize: 25,
           ),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.exit_to_app),
-            onPressed: () => _handleLogout(context),
+            icon: const Icon(Icons.settings),
+            onPressed: () =>
+                _navigateToSettings(context), // Navigate to settings
           ),
         ],
       ),
@@ -73,7 +74,8 @@ class UserListScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        currentUser.displayName ?? 'User',
+                        currentUser.displayName ??
+                            localization.unknownUser, // Localized string
                         style: GoogleFonts.mukta(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -109,7 +111,8 @@ class UserListScreen extends StatelessWidget {
                               ? const Icon(Icons.person)
                               : null,
                         ),
-                        title: Text(user['name'] ?? 'Unknown'),
+                        title: Text(user['name'] ??
+                            localization.unknownUser), // Localized string
                         subtitle: Text(user['email']),
                         onTap: () {
                           Navigator.push(
@@ -118,7 +121,9 @@ class UserListScreen extends StatelessWidget {
                               builder: (context) => ChatScreen(
                                 currentUser: currentUser,
                                 otherUserEmail: user['email'],
-                                otherUserName: user['name'] ?? 'Unknown',
+                                otherUserName: user['name'] ??
+                                    localization
+                                        .unknownUser, // Localized string
                               ),
                             ),
                           );

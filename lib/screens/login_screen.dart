@@ -1,15 +1,31 @@
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // Import the localization package
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  final Function(Locale) setLocale; // Add the setLocale function as a parameter
+
+  LoginScreen({required this.setLocale}); // Accept setLocale in constructor
+
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  String? _selectedLanguage = 'en'; // Default language is English
+
+  // List of supported languages for the dropdown
+  final List<Map<String, String>> _languages = [
+    {'code': 'en', 'name': 'English'},
+    {'code': 'mr', 'name': 'Marathi'},
+    // Add more languages if needed
+  ];
 
   Future<User?> _handleSignIn() async {
     log("Starting Google Sign-In process...");
@@ -64,6 +80,16 @@ class LoginScreen extends StatelessWidget {
     log("User information updated in Firestore: ${user.email}");
   }
 
+  // Function to change the language
+  void _changeLanguage(String languageCode) {
+    Locale selectedLocale = Locale(languageCode);
+    widget.setLocale(selectedLocale); // Update language using setLocale
+    setState(() {
+      _selectedLanguage =
+          languageCode; // Update selected language in the dropdown
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalizations.of(context)!;
@@ -106,6 +132,22 @@ class LoginScreen extends StatelessWidget {
                         fontSize: 16,
                         color: Colors.white70,
                       ),
+                    ),
+                    const SizedBox(height: 30),
+                    // Language Selection Dropdown
+                    DropdownButton<String>(
+                      value: _selectedLanguage,
+                      onChanged: (String? newValue) {
+                        if (newValue != null) {
+                          _changeLanguage(newValue);
+                        }
+                      },
+                      items: _languages.map((Map<String, String> language) {
+                        return DropdownMenuItem<String>(
+                          value: language['code'],
+                          child: Text(language['name']!),
+                        );
+                      }).toList(),
                     ),
                     const SizedBox(height: 50),
                     ElevatedButton(

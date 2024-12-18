@@ -1,10 +1,18 @@
 {
     "@@locale": "mr",
-    "welcomeTitle": "चॅट अॅप मध्ये आपले स्वागत आहे",
-    "signInToContinue": "सुरू ठेवण्यासाठी साइन इन करा",
+    "welcomeTitle": "चॅटऍपमध्ये आपले स्वागत आहे",
+    "signInToContinue": "साइन इन करा पुढे जाण्यासाठी",
     "signInWithGoogle": "Google सह साइन इन करा",
     "signInFailed": "साइन इन करण्यात अयशस्वी. कृपया पुन्हा प्रयत्न करा.",
     "loading": "लोड होत आहे...",
-    "pleaseWait": "कृपया थोडावेळ थांबा..."
+    "pleaseWait": "कृपया थांबा...",
+    "chatWithUsers": "वापरकर्त्यांशी चॅट करा",
+    "logoutFailed": "लॉगआउट करण्यात अयशस्वी. कृपया पुन्हा प्रयत्न करा.",
+    "unknownUser": "अज्ञात वापरकर्ता",
+    "typeAMessage": "एक संदेश टाईप करा",
+    "languageChanged": "भाषा यशस्वीरित्या बदलली.",
+    "settings": "सेटिंग्ज",
+    "selectLanguage": "भाषा निवडा",
+    "logout": "लॉगआउट"
   }
   
